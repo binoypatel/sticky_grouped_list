@@ -137,6 +137,8 @@ class StickyGroupedListView<T, E> extends StatefulWidget {
   /// should be placed.
   final double initialAlignment;
 
+  final void Function(T)? onHeaderChanged;
+
   /// Creates a [StickyGroupedListView].
   const StickyGroupedListView({
     super.key,
@@ -166,6 +168,7 @@ class StickyGroupedListView<T, E> extends StatefulWidget {
     this.initialAlignment = 0,
     this.initialScrollIndex = 0,
     this.shrinkWrap = false,
+    this.onHeaderChanged,
   }) : assert(itemBuilder != null || indexedItemBuilder != null);
 
   @override
@@ -322,6 +325,7 @@ class StickyGroupedListViewState<T, E>
       if (prev != curr) {
         _topElementIndex = index;
         _streamController.add(_topElementIndex);
+        widget.onHeaderChanged!(curr as T);
       }
     }
   }
