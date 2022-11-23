@@ -303,6 +303,7 @@ class StickyGroupedListViewState<T, E>
     double headerHeight = _headerBox?.size.height ?? 0;
     _listBox ??= _key.currentContext?.findRenderObject() as RenderBox?;
     double height = _listBox?.size.height ?? 0;
+    var onScrollHeaderChangeDimension = (headerHeight / 5) / height;
     headerDimension = headerHeight / height;
 
     ItemPosition reducePositions(ItemPosition pos, ItemPosition current) {
@@ -315,7 +316,7 @@ class StickyGroupedListViewState<T, E>
     ItemPosition currentItem = _listener.itemPositions.value
         .where((ItemPosition position) =>
             !_isSeparator!(position.index) &&
-            position.itemTrailingEdge > headerDimension!)
+            position.itemTrailingEdge > onScrollHeaderChangeDimension)
         .reduce(reducePositions);
 
     int index = currentItem.index ~/ 2;
